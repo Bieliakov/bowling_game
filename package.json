@@ -1,0 +1,25 @@
+{
+    "name": "gl_test",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Serhii Bieliakov",
+    "license": "ISC",
+    "devDependencies": {
+        "browserify": "^11.0.1",
+        "browserify-handlebars": "^1.0.0",
+        "gulp": "^3.9.0",
+        "gulp-concat-css": "^2.2.0",
+        "gulp-connect": "^2.2.0",
+        "gulp-if": "^1.2.5",
+        "gulp-util": "^3.0.6",
+        "gulp-print": "^1.1.0",
+        "gulp-sass": "^2.0.4",
+        "handlebars": "^4.0.0",
+        "vinyl-source-stream": "^1.1.0",
+        "yargs": "^3.21.0"
+    }
+}
