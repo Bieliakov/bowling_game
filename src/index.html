@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
 	<title></title>
@@ -5,13 +6,30 @@
 	<meta charset="utf-8" />
 </head>
 <body>
-<div id="searchPanel" data-search="container">
 
+<div id="popup" class="dark is-not-displayed" data-player="popup-background">
+    <div class="promptPlayer is-not-displayed" data-player="form-wrapper">
+        <form class="promptPlayerForm clearfix is-not-displayed" data-player="form" action="" method="GET">
+
+            <h2 class="promptPlayerForm--header">Введите имя <span class="promptPlayerForm--playerNumber" data-player="player-number">1</span>-го игрока:</h2>
+
+            <input  class="promptPlayerForm--input"  data-player="form-input-name" type="text" placeholder="Имя" autofocus />
+
+            <div class="promptPlayerForm--error is-not-displayed" data-player="form-input-name-error"></div>
+
+            <input class="promptPlayerForm--submit is-button-success" data-player="form-game-start" type="submit" value="Начать игру"/>
+            <input class="promptPlayerForm--submit is-button-add" data-player="form-name-add" type="submit" value="Добавить игрока" />
+
+        </form>
+
+    </div>
 </div>
 
-<div id="searchResultsPanel">
-	
-</div>
-	<script src="bundle.js"></script>
+<section class="resultTable" data-game="scoreboard">
+
+
+</section>
+
+<script src="bundle.js"></script>
 </body>
 </html>
