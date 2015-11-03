@@ -1,9 +1,13 @@
 ﻿##Install source code version
 
-git clone
+git clone https://github.com/Bieliakov/bowling_game.git
 
-cd
+install node.js
+
+in the project root run npm install
 
 ##Run
 
 gulp
+
+The app is available at the http://localhost:8080 adress
