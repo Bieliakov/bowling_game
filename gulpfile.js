@@ -4,8 +4,8 @@ var connect = require('gulp-connect');      //  allow livereload our files in we
 var sass = require('gulp-sass');            //  module for SASS->CSS convertion
 var concatCss = require('gulp-concat-css'); //  module for concatenation CSS files into one file
 
-// the config object from gulp.config.js file
-var config = require('./gulp.config.js')();
+
+var config = require('./gulp.config.js')(); // the config object from gulp.config.js file
 
 var jshint = require('gulp-jshint');        //  Detects errors and potential problems in code
 var util = require('gulp-util');            //  Helps to write some logs out
@@ -41,7 +41,7 @@ gulp.task('css', function () {
 
 
 gulp.task('js_check', function(){
-    log('Analyzing sourse with JSHint and JSCS');     // function at the bottom of our gulpfile.js
+    log('Analyzing sourse with JSHint');     // function at the bottom of our gulpfile.js
     return gulp
         .src(config.alljs)
         .pipe(gulpif(args.verbose, gulpprint()))      // if specify flag --verbose in console then show all the checked files

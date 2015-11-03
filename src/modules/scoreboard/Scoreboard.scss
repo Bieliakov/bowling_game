@@ -1,0 +1,37 @@
+@import "../../_const";
+
+.resultTable{
+    display: table;
+    width: 350px;
+    margin-bottom: 10px;
+    border: 1px solid silver;
+    border-radius: 10px;
+    overflow:hidden;
+
+    &__row{
+        display: table-row;
+        margin-top: 5px;
+        border-bottom: 1px solid silver;
+        border-radius: 5px;
+
+        &:first-child{
+            background-color: aliceblue;
+        }
+    }
+
+    &__cell{
+        display: table-cell;
+        padding: 5px;
+        border-bottom: 1px solid silver;
+        border-right: 1px solid silver
+    }
+}
+
+.is-result{
+    width: $table-cell-result-width;
+    height: $table-cell-result-height;
+}
+
+.is-last-result{
+    display: none !important;
+}

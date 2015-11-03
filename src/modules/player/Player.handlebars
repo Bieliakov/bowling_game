@@ -1,0 +1,11 @@
+<div class="resultTable__cell">
+    <span class="resultTable__editable is-name" contenteditable>{{name}}</span>
+</div>
+{{#each points}}
+    <div class="resultTable__cell">
+        <span class="resultTable__editable is-result" contenteditable>{{first}}</span><span class="resultTable__editable is-result is-last-result" contenteditable>{{second}}</span>
+    </div>
+{{/each}}
+<div class="resultTable__cell">
+    <span>{{total}}</span>
+</div>
