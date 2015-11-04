@@ -3,7 +3,8 @@
 </div>
 {{#each points}}
     <div class="resultTable__cell">
-        <span class="resultTable__editable is-result" contenteditable>{{first}}</span><span class="resultTable__editable is-result is-last-result" contenteditable>{{second}}</span>
+        <span class="resultTable__editable is-result" data-model="{{../name}}" data-currentFrame="{{@index}}" contenteditable>{{first}}</span>
+        <span class="resultTable__editable is-result is-last-result" data-model="{{../name}}" data-currentFrame="{{@index}}" contenteditable>{{second}}</span>
     </div>
 {{/each}}
 <div class="resultTable__cell">

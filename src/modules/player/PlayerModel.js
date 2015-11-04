@@ -18,17 +18,18 @@ module.exports = function(window){
         window.app.libraries.mediator.played();
     };
 
-    PlayerModel.prototype.save = function () {
-        //console.log('window in save func', window);
-        //console.log('localStorage', localStorage);
+    PlayerModel.prototype.create = function () {
         var activeGame = JSON.parse(localStorage['activeGame']);
-        var player = {};
-        player.name = this.name;
-        player.points = this.points;
-        activeGame.players.push(player);
-        //console.log('player', player);
-        //console.log('activeGame', activeGame);
+        activeGame.players.push(this);
         localStorage['activeGame'] = JSON.stringify(activeGame);
+    };
+
+    PlayerModel.prototype.update = function (playerObjectData) {
+
+
+        //var activeGame = JSON.parse(localStorage['activeGame']);
+        //activeGame.players.push(this);
+        //localStorage['activeGame'] = JSON.stringify(activeGame);
     };
 
     PlayerModel.prototype.getPlayerHTML = function() {

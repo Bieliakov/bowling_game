@@ -23,6 +23,20 @@ module.exports = function(window){
         return activeGame;
     };
 
+    MediatorModel.prototype.updatePlayers = function (playerObjectData) {
+        var playerName = playerObjectData.playerName;
+        var currentFrame = playerObjectData.currentFrame;
+        var currentPoint = playerObjectData.currentPoint;
+
+        console.log('playerObjectData', playerObjectData)
+
+        for (var i = 0; i < this.players.length; i++){
+
+        }
+
+
+    };
+
 
     MediatorModel.prototype.save = function () {
         console.log(JSON.stringify(this));

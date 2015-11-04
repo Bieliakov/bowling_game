@@ -1,4 +1,4 @@
-module.exports = function(Player, scoreboard, window) {
+module.exports = function(Player, scoreboard, window, events) {
 
     var MediatorView = require('./MediatorView.js')(window);
     var MediatorModel = require('./MediatorModel.js')(window);
@@ -21,7 +21,7 @@ module.exports = function(Player, scoreboard, window) {
                     function(name){
                         var player = new Player(name);
                         self.model.players.push(player);
-                        //player.model.save();
+                        player.model.create();
                         console.log('self.model', self.model);
                     },
                     function(errorsArray){
@@ -36,7 +36,11 @@ module.exports = function(Player, scoreboard, window) {
                         self.initScoreBoard(self.model.players);
                         //console.log('self.model', self.model)
                     }
-                )
+                );
+
+                events.subscribe('updatePlayer', function (playerObjectData){
+                    self.model.updatePlayers(playerObjectData);
+                });
 
             } else {
                 // change it for results page
