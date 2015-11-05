@@ -24,14 +24,16 @@ module.exports = function(window){
     };
 
     MediatorModel.prototype.updatePlayers = function (playerObjectData) {
-        var playerName = playerObjectData.playerName;
-        var currentFrame = playerObjectData.currentFrame;
-        var currentPoint = playerObjectData.currentPoint;
+
 
         console.log('playerObjectData', playerObjectData)
 
         for (var i = 0; i < this.players.length; i++){
-
+            if (this.players[i].model.name == playerObjectData.playerName){
+                console.log('this.players[i].model', this.players[i].model);
+                this.players[i].model.update(playerObjectData);
+                break;
+            }
         }
 
 
@@ -54,6 +56,7 @@ module.exports = function(window){
     };
 
     function getID(){
+        // not so good solution, but a quick one :)
         var date = new Date();
         var dateValue = date.valueOf();
         return dateValue;

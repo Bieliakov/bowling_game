@@ -9,6 +9,7 @@ module.exports = function () {
 
     }
 
+
     ScoreboardView.prototype.bind = function (event, handler){
         if (event === 'clickEditableElement'){
 
@@ -19,17 +20,23 @@ module.exports = function () {
                     var clickedElement = evt.target;
                     var currentPoint = clickedElement.innerHTML;
                     var playerName = clickedElement.getAttribute('data-model');
-                    var currentFrame = clickedElement.getAttribute('data-currentFrame');
 
-                    currentFrame++; // due to 0-based indexing
+                    // due to 0-based array indexing
+                    var currentFrameMinusOne = clickedElement.getAttribute('data-currentFrame');
+
+                    var numberOfThrow = clickedElement.getAttribute('data-position');
 
                     if (keyCode == 27){
                         // restore state
                         document.execCommand('undo');
                         clickedElement.blur();
                     } else if (keyCode == 13){
-
-                        handler(playerName, currentFrame, currentPoint);
+                        var playerObjectData = {};
+                        playerObjectData.playerName = playerName;
+                        playerObjectData.currentFrameMinusOne = currentFrameMinusOne;
+                        playerObjectData.currentPoint = currentPoint;
+                        playerObjectData.numberOfThrow = numberOfThrow;
+                        handler(playerObjectData);
                         clickedElement.blur();
                         evt.preventDefault();
                     }

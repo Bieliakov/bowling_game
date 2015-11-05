@@ -15,12 +15,7 @@ module.exports = function(events){
     ScoreboardController.prototype.init = function(playerHTMLsArray){
         console.log('ScoreboardController.prototype.init playerHTMLsArray', playerHTMLsArray);
         this.view.render('init', playerHTMLsArray);
-        this.view.bind('clickEditableElement', function(playerName, currentFrame, currentPoint){
-            var playerObjectData = {};
-            playerObjectData.playerName = playerName;
-            playerObjectData.currentFrame = currentFrame;
-            playerObjectData.currentPoint = currentPoint;
-
+        this.view.bind('clickEditableElement', function(playerObjectData){
             events.publish('updatePlayer', playerObjectData);
         });
 
