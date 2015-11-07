@@ -4,12 +4,12 @@ module.exports = function(window){
 
     function PlayerModel(name) {
         this.name = name;
-        this.total = 0;
+        this.total = '';
         this.points = [];
 
         // maybe change frametotal value or prop
         for(var i = 0; i < 10;i++){
-            this.points.push({first: 0, second:0, frameTotal: 0});
+            this.points.push({first: '', second: '', frameTotal: ''});
         }
 
     }
@@ -59,9 +59,9 @@ module.exports = function(window){
     };
 
     PlayerModel.prototype.getPlayerHTML = function() {
-        console.log('player in getPlayerHTML', this)
+        //console.log('player in getPlayerHTML', this)
         var html = playerTemplate(this);
-        console.log('html',html);
+        //console.log('html',html);
         return html;
 
     };

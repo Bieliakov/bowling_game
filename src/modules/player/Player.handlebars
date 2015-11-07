@@ -1,24 +1,55 @@
-<div class="resultTable__cell">
-    <span class="resultTable__editable is-name" contenteditable>{{name}}</span>
-</div>
-{{#each points}}
-    <div class="resultTable__cell">
-        <span class="resultTable__editable is-result"
-              data-model="{{../name}}"
-              data-currentFrame="{{@index}}"
-              data-position="first"
-              contenteditable>
-                {{first}}
-        </span>
-        <span class="resultTable__editable is-result is-last-result"
-              data-model="{{../name}}"
-              data-currentFrame="{{@index}}"
-              data-position="second"
-              contenteditable>
-                {{second}}
-        </span>
-    </div>
-{{/each}}
-<div class="resultTable__cell">
-    <span>{{total}}</span>
-</div>
+
+<tr class="resultTable__row">
+    <td class="resultTable__cell" rowspan="2">
+        <span class="resultTable__editable is-name" contenteditable>{{name}}</span>
+    </td>
+    {{#each points}}
+        <td class="resultTable__cell">
+            <input  type="text"
+                    id="{{../name}}frame{{@index}}first"
+                    class="resultTable__editable is-result"
+                    data-model="{{../name}}"
+                    data-currentFrame="{{@index}}"
+                    data-position="first"
+                    data-editable-result="true"
+                    value="{{first}}"
+                    maxlength="1"
+                    readonly
+            />
+        </td>
+        <td class="resultTable__cell">
+            <input  type="text"
+                    id="{{../name}}frame{{@index}}second"
+                    class="resultTable__editable is-result is-last-result"
+                    data-model="{{../name}}"
+                    data-currentFrame="{{@index}}"
+                    data-position="second"
+                    data-editable-result="true"
+                    value="{{second}}"
+                    maxlength="1"
+                    readonly
+            />
+        </td>
+    {{/each}}
+    <td class="resultTable__cell" rowspan="2">
+        <span>{{total}}</span>
+    </td>
+</tr>
+
+<tr class="resultTable__row">
+    {{#each points}}
+
+        <td class="resultTable__cell" colspan="2">
+            <input  type="text"
+                    class="resultTable__editable is-result is-last-result"
+                    data-model="{{../name}}"
+                    data-currentFrame="{{@index}}"
+                    data-position="second"
+                    data-editable-result="true"
+                    value="{{frameTotal}}"
+                    maxlength="1"
+                    readonly
+            />
+        </td>
+    {{/each}}
+</tr>

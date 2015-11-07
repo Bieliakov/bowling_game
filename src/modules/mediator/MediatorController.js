@@ -50,16 +50,18 @@ module.exports = function(Player, scoreboard, window, events) {
     }
 
     MediatorController.prototype.initScoreBoard = function (playersArray) {
-        console.log('playersArray', playersArray)
+        //console.log('playersArray', playersArray)
         var playerHTMLsArray = [];
         for (var i = 0; i < playersArray.length;i++){
             var playerHTML = playersArray[i].model.getPlayerHTML();
-            console.log('playerHTML', playerHTML);
+            //console.log('playerHTML', playerHTML);
             playerHTMLsArray.push(playerHTML);
         }
-        console.log('scoreboard', scoreboard);
-        console.log('playerHTMLsArray', playerHTMLsArray)
-        scoreboard.init(playerHTMLsArray);
+        //console.log('scoreboard', scoreboard);
+        //console.log('playerHTMLsArray', playerHTMLsArray)
+        scoreboard.init(playerHTMLsArray, playersArray, function(){
+
+        });
     };
 
     //MediatorController.prototype.played = function () {

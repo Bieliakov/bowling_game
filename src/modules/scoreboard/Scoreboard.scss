@@ -7,6 +7,7 @@
     border: 1px solid silver;
     border-radius: 10px;
     overflow:hidden;
+    position: relative;
 
     &__row{
         display: table-row;
@@ -14,17 +15,34 @@
         border-bottom: 1px solid silver;
         border-radius: 5px;
 
-        &:first-child{
-            background-color: aliceblue;
-        }
     }
 
     &__cell{
+        text-align: center;
         display: table-cell;
         padding: 5px;
         border-bottom: 1px solid silver;
         border-right: 1px solid silver
     }
+
+
+    &__editable{
+        border: 0;
+        text-align: center;
+        vertical-align: middle;
+        outline: none;
+        -webkit-appearance: textfield;;
+        appearance:         textfield;;
+    }
+
+    &__error{
+        position: absolute;
+        top:50%;
+    }
+}
+
+.is-head-row{
+    background-color: aliceblue;
 }
 
 .is-result{
@@ -32,6 +50,14 @@
     height: $table-cell-result-height;
 }
 
-.is-last-result{
+.is-not-displayed{
     display: none !important;
+}
+
+.is-error-container{
+    background: yellow;
+}
+
+.is-last-result{
+    /*display: none !important;*/
 }

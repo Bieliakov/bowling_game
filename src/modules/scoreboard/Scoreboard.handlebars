@@ -1,40 +1,50 @@
-
-<div class="resultTable__row">
-    <div class="resultTable__cell is-border-cell">Имя</div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">1</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">2</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">3</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">4</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">5</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">6</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">7</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">8</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">9</span>
-    </div>
-    <div class="resultTable__cell">
-        <span class="resultTable__cellContent">10</span>
-    </div>
-    <div class="resultTable__cell is-border-cell">Общие</div>
-</div>
-{{#each players}}
-    <div class="resultTable__row">
+<table class="resultTable">
+    <thead>
+        <tr class="resultTable__row is-head-row">
+            <td class="resultTable__cell is-border-cell">Имя</td>
+            <td class="resultTable__cell"  colspan="2">
+                <span class="resultTable__cellContent">1</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >2</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >3</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >4</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >5</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >6</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >7</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >8</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >9</span>
+            </td>
+            <td class="resultTable__cell" colspan="2">
+                <span class="resultTable__cellContent" >10</span>
+            </td>
+            <td class="resultTable__cell is-border-cell">Общие</td>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each playerHTMLsArray}}
         {{{this}}}
-    </div>
-{{/each}}
+        <!--<div class="resultTable__row">
+
+        </div>-->
+    {{/each}}
+    </tbody>
+
+</table>
+<div class="resultTable__error is-not-displayed" data-result="result-table-error">
+
+</div>
