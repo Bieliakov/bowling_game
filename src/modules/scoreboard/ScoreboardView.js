@@ -83,7 +83,7 @@ module.exports = function () {
 
                     var keyCode = evt.keyCode || evt.which;
 
-                    var currentPoint = $clickedElement.innerHTML;
+                    var currentPoint = $clickedElement.value;
 
 
 
@@ -91,25 +91,26 @@ module.exports = function () {
 
                     // due to 0-based array indexing
                     var currentFrameMinusOne = $clickedElement.getAttribute('data-currentFrame');
-
                     var numberOfThrow = $clickedElement.getAttribute('data-position');
+
+                    var playerObjectData = {};
+                    playerObjectData.playerName = playerName;
+                    playerObjectData.currentFrameMinusOne = currentFrameMinusOne;
+                    playerObjectData.currentPoint = currentPoint;
+                    playerObjectData.numberOfThrow = numberOfThrow;
+                    handler(playerObjectData);
 
                     if (keyCode == 27){
                         // restore state
                         document.execCommand('undo');
                         $clickedElement.blur();
                     } else if (keyCode == 13){
-                        var playerObjectData = {};
-                        playerObjectData.playerName = playerName;
-                        playerObjectData.currentFrameMinusOne = currentFrameMinusOne;
-                        playerObjectData.currentPoint = currentPoint;
-                        playerObjectData.numberOfThrow = numberOfThrow;
-                        handler(playerObjectData);
+
                         $clickedElement.blur();
                         evt.preventDefault();
                     }
 
-                    console.log('has contenteditable ande changed');
+                    //console.log('has contenteditable ande changed');
                 }
             });
         }

@@ -29,32 +29,57 @@ module.exports = function(window){
     // this two functions
     PlayerModel.prototype.update = function (playerObjectData) {
         console.log('playerObjectData', playerObjectData);
+        for (var prop in playerObjectData){
+            console.log(prop, ': ', playerObjectData[prop])
+        }
 
-        this.points[playerObjectData.currentFrameMinusOne][playerObjectData.numberOfThrow] = parseInt(playerObjectData.currentPoint);
-        console.log('this.points after update', this.points[playerObjectData.currentFrameMinusOne][playerObjectData.numberOfThrow])
-        this.calculateTotal();
+        var currentPlayerFrame = this.points[playerObjectData.currentFrameMinusOne];
+        var numberOfThrow = playerObjectData.numberOfThrow;
+        var currentPoint = playerObjectData.currentPoint;
+        console.log('currentPoint',currentPoint)
+        console.log('currentPlayerFrame',currentPlayerFrame)
+        console.log('playerObjectData.numberOfThrow', playerObjectData.numberOfThrow)
+        currentPlayerFrame[numberOfThrow] = parseInt(currentPoint);
+        //console.log('this.points after update', currentPlayerFrame.currentPoint);
+
+
+        this.calculateTotal(currentPlayerFrame, numberOfThrow, currentPoint);
+        this.save();
 
         //var activeGame = JSON.parse(localStorage['activeGame']);
         //activeGame.players.push(this);
         //localStorage['activeGame'] = JSON.stringify(activeGame);
     };
 
-    PlayerModel.prototype.calculateTotal = function () {
-        var total = 0;
+    PlayerModel.prototype.save = function () {
+        var activeGame = JSON.parse(localStorage['activeGame']);
+        console.log(activeGame.players)
+        for (var i = 0; i < activeGame.players.length; i++){
+            if (this.name === activeGame.players[i].name){
+                console.log('this.name === activeGame.players[i].name')
+                activeGame.players.splice(i,1, this);
+            }
+        }
+        console.log(activeGame.players);
+        localStorage['activeGame'] = JSON.stringify(activeGame);
+    };
+
+    PlayerModel.prototype.calculateTotal = function (currentPlayerFrame, numberOfThrow, currentPoint) {
+        this.total *= 1;
         console.log('in calculateTotal')
 
         var allowedIntegers = [0,1,2,3,4,5,6,7,8,9];
+        console.log('currentPlayerFrame', currentPlayerFrame)
+        if (numberOfThrow === 'first' && currentPlayerFrame.first in allowedIntegers){
+            console.log('this.points[currentPlayerFrame].first', currentPlayerFrame.first)
+            this.total += currentPlayerFrame.first;
 
-        for (var i = 0; i < this.points.length; i++){
-            console.log(1 in allowedIntegers)
-            if (this.points[i].first in allowedIntegers) {
-                total += this.points[i].first;
-            } else if (this.points[i].second in allowedIntegers){
-                total += this.points[i].second;
-            }
+        }
+        if (numberOfThrow === 'second' && currentPlayerFrame.second in allowedIntegers){
+            this.total += currentPlayerFrame.second;
         }
 
-        console.log('total', total);
+        console.log('this.total', this.total);
 
     };
 

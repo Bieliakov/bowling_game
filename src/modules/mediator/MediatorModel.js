@@ -31,6 +31,7 @@ module.exports = function(window){
         for (var i = 0; i < this.players.length; i++){
             if (this.players[i].model.name == playerObjectData.playerName){
                 console.log('this.players[i].model', this.players[i].model);
+
                 this.players[i].model.update(playerObjectData);
                 break;
             }
