@@ -10,4 +10,4 @@ in the project root run npm install
 
 gulp
 
-The app is available at the http://localhost:8080 address
+The app is available at the http://localhost:7777 address
