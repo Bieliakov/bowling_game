@@ -233,6 +233,7 @@ module.exports = function (events) {
                 var selectorForTotal = data.playerName + 'playerTotal';
                 self.$currentPlayerTotal = document.getElementById(selectorForTotal);
                 self.$currentPlayerTotal.innerHTML = data.playerTotal;
+
             }
         };
 

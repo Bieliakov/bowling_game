@@ -1,3 +1,9 @@
+@import "../../_const";
+
 .wrapperInputResults {
-    margin-left: 80px;
+    margin-left: $margin-left;
+}
+
+.resultsWrapper {
+    margin-left: $margin-left;
 }
