@@ -1,5 +1,5 @@
 
-<tr class="resultTable__row">
+<tr class="resultTable__row" data-name="">
     <td class="resultTable__cell" rowspan="2">
         <span class="resultTable__editable is-name" contenteditable>{{name}}</span>
     </td>
@@ -30,26 +30,55 @@
                     readonly
             />
         </td>
+        {{#if lastFrame}}
+            <td class="resultTable__cell">
+                <input  type="text"
+                        id="{{../name}}frame{{@index}}last"
+                        class="resultTable__editable is-result is-last-result"
+                        data-model="{{../name}}"
+                        data-currentFrame="{{@index}}"
+                        data-position="second"
+                        data-editable-result="true"
+                        value="{{second}}"
+                        maxlength="1"
+                        readonly
+                        />
+            </td>
+        {{/if}}
     {{/each}}
     <td class="resultTable__cell" rowspan="2">
-        <span>{{total}}</span>
+        <span id="{{name}}playerTotal">{{total}}</span>
     </td>
 </tr>
 
-<tr class="resultTable__row">
+<tr class="resultTable__row" id="{{name}}FrameTotal">
     {{#each points}}
-
-        <td class="resultTable__cell" colspan="2">
-            <input  type="text"
-                    class="resultTable__editable is-result is-last-result"
-                    data-model="{{../name}}"
-                    data-currentFrame="{{@index}}"
-                    data-position="second"
-                    data-editable-result="true"
-                    value="{{frameTotal}}"
-                    maxlength="1"
-                    readonly
-            />
-        </td>
+        {{#if lastFrame}}
+            <td class="resultTable__cell" colspan="3">
+                <input  type="text"
+                        class="resultTable__editable is-result is-last-result"
+                        data-model="{{../name}}"
+                        data-currentFrame="{{@index}}"
+                        data-position="second"
+                        data-editable-result="true"
+                        value="{{frameTotal}}"
+                        maxlength="1"
+                        readonly
+                />
+            </td>
+        {{else}}
+            <td class="resultTable__cell" colspan="2">
+                <input  type="text"
+                        class="resultTable__editable is-result is-last-result"
+                        data-model="{{../name}}"
+                        data-currentFrame="{{@index}}"
+                        data-position="second"
+                        data-editable-result="true"
+                        value="{{frameTotal}}"
+                        maxlength="1"
+                        readonly
+                        />
+            </td>
+        {{/if}}
     {{/each}}
 </tr>

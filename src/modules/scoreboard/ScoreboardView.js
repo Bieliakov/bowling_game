@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function (events) {
 
     var scoreboardTemplate = require('./Scoreboard.handlebars');
     var scoreboardButtonsTemplate = require('./ScoreboardButtons.handlebars');
@@ -6,7 +6,10 @@ module.exports = function () {
         this.templates = {scoreboardTemplate: scoreboardTemplate, scoreboardButtonsTemplate: scoreboardButtonsTemplate};
         this.validValues = ['0','1','2','3','4','5','6','7','8','9','/','X', 'x'];
         this.numberOfPlayers = 0;
+        this.elementsWithoutReadOnly = [];
         this.visibleErrors = [];
+        this.gameEnded = false;
+
     }
 
     ScoreboardView.prototype.initView = function (firstPlayerName) {
@@ -18,23 +21,61 @@ module.exports = function () {
     };
 
     ScoreboardView.prototype.checkErrors = function ($element) {
-        var flag = true;
-        console.log('$element.value', $element.value)
-        for (var i = 0; i < this.validValues.length; i++){
-            if (($element.value) === this.validValues[i]){
-                flag = false;
+        var validVeluesSecondThrow = ['0','1','2','3','4','5','6','7','8','9'];
+        // if error - return false or error;
+        var errorText = 'Пожалуйста, введите одно из значений ' + this.validValues.join(', ');
+        var currentPointString = $element.value;
+        var playerName = $element.getAttribute('data-model');
+        // due to 0-based array indexing
+        var currentFrameMinusOne = $element.getAttribute('data-currentFrame');
+        var numberOfThrow = $element.getAttribute('data-position');
+
+        var selectorFirstElement = playerName + 'frame' + currentFrameMinusOne + 'first';
+        var $elementFirstThrow = document.getElementById(selectorFirstElement);
+        var valueFirstThrow = parseInt($elementFirstThrow.value);
+
+        if (numberOfThrow == 'first'){
+            if (currentPointString == '/'){
+
+                errorText = 'Возможно x, а не "/"? :)';
+                return errorText;
+            }
+            for (var i = 0; i < this.validValues.length; i++){
+                if (currentPointString === this.validValues[i]){
+                    return false;
+                }
+            }
+        } else if (numberOfThrow == 'second'){
+            if (currentPointString == '/'){
+                return false;
+            } else if (currentPointString == 'x' || currentPointString == 'X'){
+                errorText = 'Возможно /, а не "x"? :)';
+                return errorText;
+            }
+
+            for (var i = 0; i < validVeluesSecondThrow.length; i++){
+                if (currentPointString == validVeluesSecondThrow[i]){
+                    console.log('currentPoint + valueFirstThrow' , currentPointString + valueFirstThrow)
+                    if (parseInt(currentPointString) + valueFirstThrow < 10){
+                        return false;
+                    } else {
+                        errorText = 'Сумма значений за кидки не может превышать 9 в цифрах';
+                        return errorText;
+                    }
+                }
             }
         }
-        return flag;
+
+        return errorText;
     };
 
-    ScoreboardView.prototype.showErrors = function ($element) {
+    ScoreboardView.prototype.showErrors = function ($element, errorText) {
+
         if (!this.$resultTableError){
             this.$resultTableError = document.querySelector('[data-result=result-table-error]');
         }
 
-        var text = 'Пожалуйста, введите одно из значений ' + this.validValues.join(', ');
-        this.$resultTableError.innerHTML = text;
+        this.$resultTableError.innerHTML = errorText;
         this.$resultTableError.classList.remove('is-not-displayed');
         this.visibleErrors.push(this.$resultTableError);
         $element.classList.add('is-error-container');
@@ -62,36 +103,36 @@ module.exports = function () {
                 this.$scoreboard = document.querySelector('[data-game=scoreboard]');
             }
 
-
-            this.$scoreboard.addEventListener('input', function(evt){
+            this.$scoreboard.addEventListener('keyup', function(evt){
                 var $clickedElement = evt.target;
+
                 var $nextElement;
                 if ($clickedElement.getAttribute('data-editable-result') == 'true'){
                     //console.log(evt.target.getAttribute('data-editable-result'));
+                    var keyCode = evt.keyCode || evt.which;
+                    var currentPoint = $clickedElement.value;
 
-                    var checkedCurrentField = self.checkErrors($clickedElement);
-                    console.log('checkedCurrentField', checkedCurrentField);
+                    if (keyCode == 8) {
+                        $clickedElement.value = '';
+                        self.hideErrors($clickedElement);
+                        return;
+                    }
 
-                    if (checkedCurrentField){
-                        return self.showErrors($clickedElement);
+                    var playerName = $clickedElement.getAttribute('data-model');
+                // due to 0-based array indexing
+                    var currentFrameMinusOne = $clickedElement.getAttribute('data-currentFrame');
+                    var numberOfThrow = $clickedElement.getAttribute('data-position');
+
+                    var errorText = self.checkErrors($clickedElement);
+
+                    if (errorText){
+                        return self.showErrors($clickedElement, errorText);
                     } else {
-                        var playerName = $clickedElement.getAttribute('data-model');
+
                         self.hideErrors($clickedElement);
                         checkCallback(playerName, $clickedElement);
 
                     }
-
-                    var keyCode = evt.keyCode || evt.which;
-
-                    var currentPoint = $clickedElement.value;
-
-
-
-                    var playerName = $clickedElement.getAttribute('data-model');
-
-                    // due to 0-based array indexing
-                    var currentFrameMinusOne = $clickedElement.getAttribute('data-currentFrame');
-                    var numberOfThrow = $clickedElement.getAttribute('data-position');
 
                     var playerObjectData = {};
                     playerObjectData.playerName = playerName;
@@ -100,24 +141,11 @@ module.exports = function () {
                     playerObjectData.numberOfThrow = numberOfThrow;
                     handler(playerObjectData);
 
-                    if (keyCode == 27){
-                        // restore state
-                        document.execCommand('undo');
-                        $clickedElement.blur();
-                    } else if (keyCode == 13){
-
-                        $clickedElement.blur();
-                        evt.preventDefault();
-                    }
-
-                    //console.log('has contenteditable ande changed');
                 }
             });
         }
 
-        if (event === 'getInputData'){
 
-        }
     };
 
     ScoreboardView.prototype.goToNextElement = function($previousElement, nextPlayerName, nextFrame){
@@ -130,7 +158,7 @@ module.exports = function () {
         var currentFrameMinusOne = $previousElement.getAttribute('data-currentFrame');
 
         var numberOfThrow = $previousElement.getAttribute('data-position');
-
+        var nextFrameNumber = parseInt(currentFrameMinusOne) + 1;
 
 
         if (previousNumberOfPoints == 0 || previousNumberOfPoints == 1 || previousNumberOfPoints == 2 ||
@@ -143,14 +171,31 @@ module.exports = function () {
                 selector = playerName + 'frame' + currentFrameMinusOne + 'second';
                 console.log('selector', selector)
             } else if (numberOfThrow === 'second' && nextFrame){
-                var nextFrameNumber = parseInt(currentFrameMinusOne) + 1;
+
                 selector = nextPlayerName + 'frame' + nextFrameNumber + 'first';
             } else if (numberOfThrow === 'second'){
 
                 selector = nextPlayerName + 'frame' + currentFrameMinusOne + 'first';
             }
-            $nextElement = document.getElementById(selector);
+
+        } else if (previousNumberOfPoints == '/'){
+            if (numberOfThrow === 'first'){
+
+            } else if (numberOfThrow === 'second' && nextFrame){
+
+                selector = nextPlayerName + 'frame' + nextFrameNumber + 'first';
+            } else if (numberOfThrow === 'second'){
+                selector = nextPlayerName + 'frame' + currentFrameMinusOne + 'first';
+            }
+
+        } else if ((previousNumberOfPoints == 'x') || (previousNumberOfPoints == 'X')){
+            if (nextFrame){
+                selector = nextPlayerName + 'frame' + nextFrameNumber + 'first';
+            } else {
+                selector = nextPlayerName + 'frame' + currentFrameMinusOne + 'first';
+            }
         }
+        $nextElement = document.getElementById(selector);
         this.getFocusToElement($nextElement)
 
     };
@@ -180,6 +225,14 @@ module.exports = function () {
                 //console.log('html!!', html);
                 console.log('fragment', fragment);
                 self.$scoreboard.appendChild(fragment);
+            },
+            updatePlayer: function(data){
+                var selector = data.playerName + 'FrameTotal';
+                self.$currentPlayerFrameTotal = document.getElementById(selector);
+                self.$currentPlayerFrameTotal.innerHTML = data.playerFrameTotalHTML;
+                var selectorForTotal = data.playerName + 'playerTotal';
+                self.$currentPlayerTotal = document.getElementById(selectorForTotal);
+                self.$currentPlayerTotal.innerHTML = data.playerTotal;
             }
         };
 
@@ -188,11 +241,23 @@ module.exports = function () {
     };
 
     ScoreboardView.prototype.getFocusToElement = function ($element) {
-        $element.readOnly = false;
-        $element.focus();
-
+        if (!$element){
+            this.addReadOnlyAttributes()
+            // it's not right to do it from view
+            events.publish('endCurrentGame');
+        } else {
+            this.elementsWithoutReadOnly.push($element);
+            $element.readOnly = false;
+            $element.focus();
+        }
     };
 
+    ScoreboardView.prototype.addReadOnlyAttributes = function () {
+        this.elementsWithoutReadOnly.forEach(function(v,i,a){
+            a[i].readOnly = true;
+        });
+        this.elementsWithoutReadOnly = [];
+    };
 
     return ScoreboardView;
 };

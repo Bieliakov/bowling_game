@@ -23,10 +23,10 @@ module.exports = function(window){
         return activeGame;
     };
 
-    MediatorModel.prototype.updatePlayers = function (playerObjectData) {
+    MediatorModel.prototype.updatePlayers = function (playerObjectData, callback) {
 
 
-        console.log('playerObjectData', playerObjectData)
+        console.log('playerObjectData', playerObjectData);
 
         for (var i = 0; i < this.players.length; i++){
             if (this.players[i].model.name == playerObjectData.playerName){
@@ -36,12 +36,13 @@ module.exports = function(window){
                 break;
             }
         }
-
+        callback(this.players[i].model);
 
     };
 
 
-    MediatorModel.prototype.save = function () {
+    MediatorModel.prototype.saveCurrentGame = function () {
+
         console.log(JSON.stringify(this));
         window.localStorage['activeGame'] = JSON.stringify(this);
         ////console.log('window in save func', window);
@@ -54,6 +55,45 @@ module.exports = function(window){
         ////console.log('player', player);
         ////console.log('activeGame', activeGame);
         //localStorage['activeGame'] = JSON.stringify(activeGame);
+    };
+
+    MediatorModel.prototype.saveGame = function () {
+        console.log('this.totalPoints', this.totalPoints)
+        this.calculateGameTotal();
+        console.log('this.totalPoints', this.totalPoints)
+        var savedGames;
+
+        if (!window.localStorage['savedGames']){
+            savedGames = [];
+        } else {
+            savedGames = JSON.parse(window.localStorage['savedGames']);
+        }
+
+        for (var i=0; i < savedGames.length; i++){
+            if (this.id == savedGames[i].id){
+            return;}
+        }
+
+        savedGames.push(this);
+        window.localStorage['savedGames'] = JSON.stringify(savedGames);
+        console.log(JSON.stringify(this));
+        //window.localStorage['activeGame'] = JSON.stringify(this);
+        ////console.log('window in save func', window);
+        ////console.log('localStorage', localStorage);
+        //var activeGame = JSON.parse(localStorage['activeGame']);
+        //var player = {};
+        //player.name = this.name;
+        //player.points = this.points;
+        //activeGame.push(player);
+        ////console.log('player', player);
+        ////console.log('activeGame', activeGame);
+        //localStorage['activeGame'] = JSON.stringify(activeGame);
+    };
+
+    MediatorModel.prototype.calculateGameTotal = function () {
+        for (var i = 0; i < this.players.length; i++){
+            this.totalPoints += this.players[i].model.total;
+        }
     };
 
     function getID(){

@@ -1,10 +1,14 @@
 module.exports = function(){
 
     function checkActiveGame(){
-        var activeGame = JSON.parse(window.localStorage['activeGame']);
-        if (activeGame.id){
-            return true;
+        var activeGame;
+        if (window.localStorage['activeGame']){
+            activeGame = JSON.parse(window.localStorage['activeGame']);
+            if (activeGame.id){
+                return true;
+            }
         } else return false;
+
     }
 
     function ScoreboardModel() {

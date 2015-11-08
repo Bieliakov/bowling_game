@@ -1,0 +1,29 @@
+{{#each points}}
+    {{#if lastFrame}}
+        <td class="resultTable__cell" colspan="3">
+            <input  type="text"
+                    class="resultTable__editable is-result is-last-result"
+                    data-model="{{../name}}"
+                    data-currentFrame="{{@index}}"
+                    data-position="second"
+                    data-editable-result="true"
+                    value="{{frameTotal}}"
+                    maxlength="1"
+                    readonly
+                    />
+        </td>
+    {{else}}
+        <td class="resultTable__cell" colspan="2">
+            <input  type="text"
+                    class="resultTable__editable is-result is-last-result"
+                    data-model="{{../name}}"
+                    data-currentFrame="{{@index}}"
+                    data-position="second"
+                    data-editable-result="true"
+                    value="{{frameTotal}}"
+                    maxlength="1"
+                    readonly
+                    />
+        </td>
+    {{/if}}
+{{/each}}

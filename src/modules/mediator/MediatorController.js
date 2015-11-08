@@ -1,6 +1,6 @@
-module.exports = function(Player, scoreboard, window, events) {
+module.exports = function(Player, ScoreboardController, window, events) {
 
-    var MediatorView = require('./MediatorView.js')(window);
+    var MediatorView = require('./MediatorView.js')(window, events);
     var MediatorModel = require('./MediatorModel.js')(window);
 
     function MediatorController(){
@@ -9,47 +9,47 @@ module.exports = function(Player, scoreboard, window, events) {
         this.model = new MediatorModel();
 
         this.init = function () {
-            var flag = confirm('Хотите заполнить результаты игры в боулинг?');
 
-            if (flag){
+            self.model = new MediatorModel();
+            self.model.saveCurrentGame();
+            self.view.showPopup();
 
-                self.model = new MediatorModel();
-                self.model.save();
-                self.view.showPopup();
-
-                self.view.bind('clickAddPlayerButton',
-                    function(name){
-                        var player = new Player(name);
-                        self.model.players.push(player);
-                        player.model.create();
-                        console.log('self.model', self.model);
-                    },
-                    function(errorsArray){
-                        if (errorsArray.length){
-                            self.view.render('renderErrors', errorsArray);
-                        }
+            self.view.bind('clickAddPlayerButton',
+                function(name){
+                    var player = new Player(name);
+                    self.model.players.push(player);
+                    player.model.create();
+                    console.log('self.model', self.model);
+                },
+                function(errorsArray){
+                    if (errorsArray.length){
+                        self.view.render('renderErrors', errorsArray);
                     }
-                );
+                }
+            );
 
-                self.view.bind('clickStartGameButton',
-                    function(){
-                        self.initScoreBoard(self.model.players);
-                        //console.log('self.model', self.model)
-                    }
-                );
+            self.view.bind('clickStartGameButton',
+                function(){
+                    self.initScoreBoard(self.model.players);
+                    //console.log('self.model', self.model)
+                }
+            );
 
-                events.subscribe('updatePlayer', function (playerObjectData){
-                    self.model.updatePlayers(playerObjectData);
+            events.subscribe('updatePlayer', function (playerObjectData){
+                self.model.updatePlayers(playerObjectData, function(updatedPlayer){
+                    self.updateScoreboard(updatedPlayer);
                 });
+            });
 
-            } else {
-                // change it for results page
-                alert('Возвращайтесь, когда заходите');
-            }
+            events.subscribe('endCurrentGame', function (){
+                self.model.saveGame();
+            });
+
         };
     }
 
     MediatorController.prototype.initScoreBoard = function (playersArray) {
+        var self = this;
         //console.log('playersArray', playersArray)
         var playerHTMLsArray = [];
         for (var i = 0; i < playersArray.length;i++){
@@ -59,19 +59,18 @@ module.exports = function(Player, scoreboard, window, events) {
         }
         //console.log('scoreboard', scoreboard);
         //console.log('playerHTMLsArray', playerHTMLsArray)
-        scoreboard.init(playerHTMLsArray, playersArray, function(){
 
-        });
+        this.scoreboard = new ScoreboardController()
+        this.scoreboard.init(playerHTMLsArray, playersArray);
     };
 
-    //MediatorController.prototype.played = function () {
-    //    var players = this.players,
-    //        score = {
-    //            Home: players.home.points,
-    //            Guest: players.guest.points
-    //        };
-    //    scoreboard.update(score);
-    //};
+    MediatorController.prototype.updateScoreboard = function (updatedPlayer) {
+
+        var playerFrameTotalHTML = updatedPlayer.getFrameTotalHTML();
+        console.log('updatedPlayer', updatedPlayer)
+
+        this.scoreboard.update(playerFrameTotalHTML, updatedPlayer.name, updatedPlayer.total);
+    };
 
     return MediatorController;
 };

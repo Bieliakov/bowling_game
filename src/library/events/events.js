@@ -1,7 +1,8 @@
 module.exports = {
 
     subscribers: {
-        'updatePlayer': [] // event type: 'updatePlayer'
+        'updatePlayer': [], // event type: 'updatePlayer'
+        'endCurrentGame': []
     },
 
     subscribe: function (type, fn) {

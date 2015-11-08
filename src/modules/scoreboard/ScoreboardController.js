@@ -1,6 +1,6 @@
 module.exports = function(events){
 
-    var View = require('./ScoreboardView.js')();
+    var View = require('./ScoreboardView.js')(events);
     var Model = require('./ScoreboardModel.js')();
 
     function ScoreboardController(){
@@ -12,7 +12,7 @@ module.exports = function(events){
         });
     }
 
-    ScoreboardController.prototype.init = function(playerHTMLsArray, playersArray, callback){
+    ScoreboardController.prototype.init = function(playerHTMLsArray, playersArray){
         //console.log('ScoreboardController.prototype.init playerHTMLsArray', playerHTMLsArray);
         var self = this;
         this.view.render('init', {playerHTMLsArray: playerHTMLsArray});
@@ -37,11 +37,14 @@ module.exports = function(events){
                 }
             }
         );
+
+
     };
 
-    ScoreboardController.prototype.update = function(score){
-        console.log('in ScoreboardController.prototype.update with score', score);
-        this.view.render('update', score);
+    ScoreboardController.prototype.update = function(playerFrameTotalHTML, playerName, playerTotal){
+        // not so good passing player to scoreboard
+        //console.log('playerFrameTotalHTML',playerFrameTotalHTML)
+        this.view.render('updatePlayer', {playerFrameTotalHTML: playerFrameTotalHTML, playerName: playerName, playerTotal: playerTotal});
 
     };
 

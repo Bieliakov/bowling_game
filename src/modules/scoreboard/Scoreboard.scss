@@ -1,12 +1,17 @@
 @import "../../_const";
 
+.wrapper {
+
+    margin-left: 80px;
+    margin-top: 80px;
+}
 .resultTable{
     display: table;
     width: 350px;
     margin-bottom: 10px;
     border: 1px solid silver;
     border-radius: 10px;
-    overflow:hidden;
+    /*overflow:hidden;*/
     position: relative;
 
     &__row{

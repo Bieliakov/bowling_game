@@ -62,7 +62,7 @@ gulp.task('browserify', ['js_check'],  function() {
 
 gulp.task('serverGulp', function(){
     connect.server({
-        port: 8080,                                 // Server started at http://localhost:8080
+        port: 7777,                                 // Server started at http://localhost:7777
         root: 'build',                              // place where our main files are
         livereload: true                            // livereload for the server
     })
