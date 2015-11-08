@@ -8,7 +8,6 @@ module.exports = function (events) {
         this.numberOfPlayers = 0;
         this.elementsWithoutReadOnly = [];
         this.visibleErrors = [];
-        this.gameEnded = false;
 
     }
 
@@ -140,12 +139,9 @@ module.exports = function (events) {
                     playerObjectData.currentPoint = currentPoint;
                     playerObjectData.numberOfThrow = numberOfThrow;
                     handler(playerObjectData);
-
                 }
             });
         }
-
-
     };
 
     ScoreboardView.prototype.goToNextElement = function($previousElement, nextPlayerName, nextFrame){

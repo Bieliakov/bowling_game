@@ -60,14 +60,14 @@ module.exports = function(Player, ScoreboardController, window, events) {
         //console.log('scoreboard', scoreboard);
         //console.log('playerHTMLsArray', playerHTMLsArray)
 
-        this.scoreboard = new ScoreboardController()
+        this.scoreboard = new ScoreboardController();
         this.scoreboard.init(playerHTMLsArray, playersArray);
     };
 
     MediatorController.prototype.updateScoreboard = function (updatedPlayer) {
 
         var playerFrameTotalHTML = updatedPlayer.getFrameTotalHTML();
-        console.log('updatedPlayer', updatedPlayer)
+        console.log('updatedPlayer', updatedPlayer);
 
         this.scoreboard.update(playerFrameTotalHTML, updatedPlayer.name, updatedPlayer.total);
     };

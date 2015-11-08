@@ -3,22 +3,7 @@ module.exports = function () {
     var template = require('./Scoreboard.handlebars');
 
     function ScoreboardView() {
-
         this.template = template;
-
-    }
-
-    ScoreboardView.prototype.render = function(viewCmd, data) {
-
-        var self = this;
-
-        var viewCommands = {
-            showLoading : function() {
-                self.$viewPort.innerHTML = self.templates.loading();
-            }
-        };
-
-        viewCommands[viewCmd](data);
     };
 
     ScoreboardView.prototype.bind = function (event, handler) {
@@ -40,10 +25,10 @@ module.exports = function () {
                 if (!self.$resultsWrapper){
                     self.$resultsWrapper = document.querySelector('[data-game=previous-results]');
                 }
-                console.log('gamesArray', gamesArray);
-                console.log('self.$resultsWrapper', self.$resultsWrapper)
+                //console.log('gamesArray', gamesArray);
+                //console.log('self.$resultsWrapper', self.$resultsWrapper)
                 var html = self.template(gamesArray);
-                console.log('html',html)
+                //console.log('html',html)
 
                 self.$resultsWrapper.innerHTML = html;
             }

@@ -3,8 +3,6 @@ module.exports = function () {
     function MediatorView() {
         this.visibleElements = [];
         this.visibleErrors = [];
-        //this.scoreboard = document.querySelector('[data-game=scoreboard]');
-
     }
 
     MediatorView.prototype.bind = function (event, handler, handlerInvalidData){
@@ -50,16 +48,8 @@ module.exports = function () {
             this.$playerStartGameButton.onclick = function(evt) {
 
                 evt.preventDefault();
-
                 self.removeErrorsFromForm();
-
                 self.clearInput();
-
-                // add checking for players numbers
-                //if (!this.playerNumber){
-                //
-                //}
-
                 self.hideVisibleElements();
                 handler();
             }
@@ -149,11 +139,9 @@ module.exports = function () {
                 if (!self.$ErrorInputName){
                     self.$ErrorInputName = document.querySelector('[data-player=form-input-name-error]');
                 }
-
                 //console.log('in renderErrors func');
                 for (var i = 0; i < errorsArray.length; i++){
                     //console.log('errorsArray[i]', errorsArray[i]);
-
                     if (errorsArray[i].form === 'player') {
                         if (errorsArray[i].type === 'name' || errorsArray[i].type === 'name wrong') {
                             self.handleErrorAddition(self.$ErrorInputName, errorsArray[i]);

@@ -16,15 +16,8 @@ module.exports = function(window){
             } else {
                 this.points.push({first: '', second: '', frameTotal: '', mark: '', updated: '', updatedTwice:''});
             }
-
         }
-
     }
-
-    PlayerModel.prototype.play = function () {
-        this.points.push(Math.floor(Math.random()) * 11);
-        window.app.libraries.mediator.played();
-    };
 
     PlayerModel.prototype.create = function () {
         var activeGame = JSON.parse(localStorage['activeGame']);
@@ -33,12 +26,10 @@ module.exports = function(window){
     };
 
 
-    // this two functions
     PlayerModel.prototype.update = function (playerObjectData) {
         var currentPlayerFrame = this.points[playerObjectData.currentFrameMinusOne];
         var numberOfThrow = playerObjectData.numberOfThrow;
         var currentPoint = playerObjectData.currentPoint;
-
 
         var allowedIntegers = [0,1,2,3,4,5,6,7,8,9];
         if (currentPoint == '/'){
@@ -61,29 +52,8 @@ module.exports = function(window){
 
         }
         this.calculateFrameTotal(playerObjectData.currentFrameMinusOne, currentPoint);
-
-
-        //console.log('playerObjectData', playerObjectData);
-        //for (var prop in playerObjectData){
-        //    console.log(prop, ': ', playerObjectData[prop])
-        //}
-
-
-        //console.log('currentPoint',currentPoint)
-        //console.log('currentPlayerFrame',currentPlayerFrame)
-        //console.log('playerObjectData.numberOfThrow', playerObjectData.numberOfThrow)
-
-
-
-        //console.log('this.points after update', currentPlayerFrame.currentPoint);
-
-
-        //this.calculateTotal(currentPlayerFrame, numberOfThrow, currentPoint);
         this.save();
 
-        //var activeGame = JSON.parse(localStorage['activeGame']);
-        //activeGame.players.push(this);
-        //localStorage['activeGame'] = JSON.stringify(activeGame);
     };
 
     PlayerModel.prototype.calculateFrameTotal = function(currentFrameMinusOne, currentPoint){
@@ -135,24 +105,11 @@ module.exports = function(window){
 
     PlayerModel.prototype.calculateTotal = function (currentPlayerFrame, numberOfThrow, currentPoint) {
         this.total = 0;
-        //console.log('in calculateTotal');
-        //
-        //var allowedIntegers = [0,1,2,3,4,5,6,7,8,9];
-        //console.log('currentPlayerFrame', currentPlayerFrame)
-        //if (numberOfThrow === 'first' && currentPlayerFrame.first in allowedIntegers){
-        //    console.log('this.points[currentPlayerFrame].first', currentPlayerFrame.first)
-        //    this.total += currentPlayerFrame.first;
-        //
-        //}
-        //if (numberOfThrow === 'second' && currentPlayerFrame.second in allowedIntegers){
-        //    this.total += currentPlayerFrame.second;
-        //}
+
         for (var i = 0; i < this.points.length; i++){
             if (this.points[i].frameTotal){
                 this.total += parseInt(this.points[i].frameTotal);
             }
-            //console.log('this.points[i].frameTotal', this.points[i].frameTotal)
-            //
         }
         console.log('this.total', this.total);
 

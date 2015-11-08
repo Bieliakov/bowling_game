@@ -28,13 +28,13 @@ module.exports = function (MediatorController) {
                     topGamesArray.length = smallerQuantity;
                     console.log('topGamesArray',topGamesArray);
                     //for (var i = 0; i < smallerQuantity; i++){
-                    ////for (var i = 0; i < savedGames.length; i++){
-                    ////    var gameTotal = savedGames[i].totalPoints;
-                    ////    //var mediatorController = new MediatorController();
-                    ////    //mediatorController.model.players = savedGames[i].players;
-                    ////    //mediatorController.initScoreBoard(mediatorController.model.players);
-                    ////
-                    ////
+                    //for (var i = 0; i < savedGames.length; i++){
+                    //    var gameTotal = savedGames[i].totalPoints;
+                    //    //var mediatorController = new MediatorController();
+                    //    //mediatorController.model.players = savedGames[i].players;
+                    //    //mediatorController.initScoreBoard(mediatorController.model.players);
+                    //
+                    //
                     //}
                     this.view.render('showGames', {topGamesArray: topGamesArray});
                 }).bind(this));
