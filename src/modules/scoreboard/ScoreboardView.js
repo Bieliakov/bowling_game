@@ -243,9 +243,12 @@ module.exports = function (events) {
 
     ScoreboardView.prototype.getFocusToElement = function ($element) {
         if (!$element){
-            this.addReadOnlyAttributes()
+            this.addReadOnlyAttributes();
             // it's not right to do it from view
-            events.publish('endCurrentGame');
+            window.setTimeout(function(){
+                events.publish('endCurrentGame');
+            },0);
+
         } else {
             this.elementsWithoutReadOnly.push($element);
             $element.readOnly = false;

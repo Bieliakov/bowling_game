@@ -45,16 +45,7 @@ module.exports = function(window){
 
         console.log(JSON.stringify(this));
         window.localStorage['activeGame'] = JSON.stringify(this);
-        ////console.log('window in save func', window);
-        ////console.log('localStorage', localStorage);
-        //var activeGame = JSON.parse(localStorage['activeGame']);
-        //var player = {};
-        //player.name = this.name;
-        //player.points = this.points;
-        //activeGame.push(player);
-        ////console.log('player', player);
-        ////console.log('activeGame', activeGame);
-        //localStorage['activeGame'] = JSON.stringify(activeGame);
+
     };
 
     MediatorModel.prototype.saveGame = function () {
@@ -77,17 +68,7 @@ module.exports = function(window){
         savedGames.push(this);
         window.localStorage['savedGames'] = JSON.stringify(savedGames);
         console.log(JSON.stringify(this));
-        //window.localStorage['activeGame'] = JSON.stringify(this);
-        ////console.log('window in save func', window);
-        ////console.log('localStorage', localStorage);
-        //var activeGame = JSON.parse(localStorage['activeGame']);
-        //var player = {};
-        //player.name = this.name;
-        //player.points = this.points;
-        //activeGame.push(player);
-        ////console.log('player', player);
-        ////console.log('activeGame', activeGame);
-        //localStorage['activeGame'] = JSON.stringify(activeGame);
+
     };
 
     MediatorModel.prototype.calculateGameTotal = function () {
